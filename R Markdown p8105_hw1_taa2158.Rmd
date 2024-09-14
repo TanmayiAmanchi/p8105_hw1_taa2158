@@ -1,4 +1,60 @@
 ---
 title: "Homework 1 taa2158"
-output: html_document
+author: "Tanmayi Amanchi"
+date: "2024-09-13"
+output: github_document
 ---
+
+##Problem 1
+
+
+First I will use the following code to load the penguins dataset
+
+```{r}
+  data("penguins", package = "palmerpenguins")
+```
+
+The species of penguins in this dataset are Adelie from the Torgersen island. There is information about their bill length (mm), bill depth (mm), flipper length (mm), body mass (g), sex, and year.
+
+Using the nrow and ncol function
+
+```{r}
+  nrow(penguins)
+  ncol(penguins)
+```
+
+There are 344 observations and 8 variables. 
+
+Using the Mean function and ommitting rows with NA in the calculation
+```{r}
+  mean(na.omit(penguins[["flipper_length_mm"]]))
+```
+
+The mean flipper length is 200.9152
+
+Now I will make a scatter plot of flipper_length_mm (y) vs bill_length_mm (x); color points using the species variable. I've first loaded the tidyverse package in order to create the scatter plot before using the ggplot function. I will also save this plot as a jpeg using the ggsave function. As noted in the warnings the rows containing missing values or values outside the scale range were not included in the plot.
+```{r}
+library(tidyverse)
+ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) +
+  geom_point() +
+  labs(title = "Scatterplot of Flipper Length vs Bill Length",
+       x = "Bill Length (mm)",
+       y = "Flipper Length (mm)",
+       color = "Species")
+ggsave("scatterplot_flipper_vs_bill.jpeg")
+```
+##Problem 2
+
+#Create the data frame
+```{r}
+example_df = tibble(
+  vec_numeric = rnorm(10),                         # Random sample from standard Normal distribution
+  vec_logical = rnorm(10) > 0,                      # Logical vector indicating if the sample is > 0
+  vec_char = letters[1:10],                        # Character vector of length 10
+  vec_factor = factor(sample(c("1", "2", "3"), 10, replace = TRUE))  # Factor vector with 3 levels
+)
+
+example_df
+```
+
+
