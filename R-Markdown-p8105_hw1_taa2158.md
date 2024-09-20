@@ -3,7 +3,7 @@ Homework 1 taa2158
 Tanmayi Amanchi
 2024-09-13
 
-\##Problem 1
+# Problem 1
 
 First I will use the following code to load the penguins dataset
 
@@ -73,9 +73,6 @@ ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)
        color = "Species")
 ```
 
-    ## Warning: Removed 2 rows containing missing values or values outside the scale range
-    ## (`geom_point()`).
-
 ![](R-Markdown-p8105_hw1_taa2158_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
 ``` r
@@ -84,34 +81,53 @@ ggsave("scatterplot_flipper_vs_bill.jpeg")
 
     ## Saving 7 x 5 in image
 
-    ## Warning: Removed 2 rows containing missing values or values outside the scale range
-    ## (`geom_point()`).
+# Problem 2
 
-\##Problem 2
-
-\#Create the data frame
+Create the data frame
 
 ``` r
-example_df = tibble(
-  vec_numeric = rnorm(10),                         # Random sample from standard Normal distribution
-  vec_logical = rnorm(10) > 0,                      # Logical vector indicating if the sample is > 0
-  vec_char = letters[1:10],                        # Character vector of length 10
-  vec_factor = factor(sample(c("1", "2", "3"), 10, replace = TRUE))  # Factor vector with 3 levels
+penguin_q2 = tibble(
+  sample_numeric = rnorm(10),                         
+  sample_logical = rnorm(10) > 0,                      # Logical vector indicating if the sample is > 0
+  sample_char = letters[1:10],                        # Character vector of length 10
+  sample_factor = factor(sample(c("1", "2", "3"), 10, replace = TRUE))  # Factor vector with 3 levels
 )
 
-example_df
+penguin_q2
 ```
 
     ## # A tibble: 10 × 4
-    ##    vec_numeric vec_logical vec_char vec_factor
-    ##          <dbl> <lgl>       <chr>    <fct>     
-    ##  1       1.15  TRUE        a        2         
-    ##  2      -1.24  FALSE       b        1         
-    ##  3      -0.588 FALSE       c        2         
-    ##  4       1.32  FALSE       d        2         
-    ##  5       2.04  FALSE       e        1         
-    ##  6      -1.84  TRUE        f        2         
-    ##  7       0.266 FALSE       g        1         
-    ##  8       0.692 TRUE        h        1         
-    ##  9      -1.12  FALSE       i        2         
-    ## 10       0.659 FALSE       j        3
+    ##    sample_numeric sample_logical sample_char sample_factor
+    ##             <dbl> <lgl>          <chr>       <fct>        
+    ##  1         1.64   FALSE          a           2            
+    ##  2        -0.550  TRUE           b           1            
+    ##  3        -0.0624 TRUE           c           1            
+    ##  4         0.750  TRUE           d           1            
+    ##  5        -0.192  TRUE           e           1            
+    ##  6         1.48   TRUE           f           3            
+    ##  7         1.32   TRUE           g           2            
+    ##  8         0.588  TRUE           h           1            
+    ##  9        -0.389  TRUE           i           3            
+    ## 10         0.0435 FALSE          j           2
+
+Taking the mean of each variable in dataframe
+
+``` r
+means = tibble(
+  sample_numeric_mean = mean(pull(penguin_q2, sample_numeric)),
+  sample_logical_mean = mean(as.numeric(pull(penguin_q2, sample_logical))),
+  sample_char_mean = mean(as.numeric(pull(penguin_q2, sample_char))),
+  sample_factor_mean = mean(as.numeric(pull(penguin_q2, sample_factor))),
+)
+```
+
+    ## Warning in mean(as.numeric(pull(penguin_q2, sample_char))): NAs introduced by
+    ## coercion
+
+The numeric variable gets coded as either close 1 or 0, which causes the
+mean to be around 0.5. The logical variable is either TRUE or FALSE.
+Meanwhile, the factor variable can get coded in regard to the levels of
+1-3, thereby creating a mean close to 2. However, the character
+variables get changed into NA’s by coercion, as there are no numeric
+values, therefore a mean still cannot be calculate as the variables are
+NA.
